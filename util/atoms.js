@@ -1,8 +1,5 @@
 import { atom } from "jotai";
 
-// Job state
-export const actionsAtom = atom([])
-
 // Sprite State
 export const spritesAtom = atom([
     {
@@ -15,4 +12,3 @@ export const spritesAtom = atom([
 ])
 export const activeSpriteAtom = atom(0)
 
-export const heroFeatureTriggerAtom = atom(false)

@@ -1,20 +1,12 @@
-
-
-import React, { useState } from 'react'
-import CatSprite from './CatSprite'
+import React from 'react'
 import Icon from './Icon'
 import { spritesAtom,activeSpriteAtom } from '../../util/atoms'
 import { useAtom } from 'jotai'
-
-
-
 
 function Sprites() {
 
     const [sprites, setSprites] = useAtom(spritesAtom)
     const [activeSprite, setActiveSprite] = useAtom(activeSpriteAtom)
-    // const [file, setFile] = useState()
-
 
     const handleUpload = (event) => {
         let file = event.target.files[0]
@@ -32,7 +24,6 @@ function Sprites() {
         event.preventDefault()
         let element = event.target.parentNode.id;
         let id = element.split("-")[1];
-        console.log(element, id)
         
         setActiveSprite(id)
     }
@@ -40,7 +31,6 @@ function Sprites() {
     const handleDelete = (event) => {
         let parent = event.currentTarget.parentNode;
         let id = parent.id.split("-")[1];
-        console.log(parent)
         setSprites(sprites.filter((_,idx) => idx != parseInt(id)))
     }
 

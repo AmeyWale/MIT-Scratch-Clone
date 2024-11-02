@@ -1,17 +1,12 @@
-import React, { act } from 'react'
+import React from 'react'
 
 
-import { actionsAtom, positionAtom, rotationAtom, spritesAtom } from '../../util/atoms'
+import { spritesAtom } from '../../util/atoms'
 import { useAtom } from 'jotai'
-import dragItems from '../../util/DragItems'
-import getStyles from '../../util/getProperties';
+
 
 function Header() {
 
-  // const [repeatCount, setRepeatCount] = useAtom(repeatCountAtom);
-  // const [actions, setAction] = useAtom(actionsAtom);
-  // const [position, setPosition] = useAtom(positionAtom);
-  // const [rotation, setRotation] = useAtom(rotationAtom);
   const [sprites, setSprites] = useAtom(spritesAtom)
  
   const handleRun = async () =>{
@@ -95,7 +90,7 @@ function Header() {
     <div className='pl-2 pb-2 flex justify-around'>
         <h1>MIT Scratch Clone </h1>
         <div className='flex  gap-2'>
-          
+
             <div onClick={handleRun} className='p-3 rounded-full bg-green-900 cursor-pointer'></div>
             <div onClick={handleReset} className='p-3 rounded-full bg-red-900 cursor-pointer'></div>
         </div>

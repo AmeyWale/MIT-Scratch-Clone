@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import Icon from "./Icon";
 import dragItems from "../../util/DragItems";
 import { useAtom } from "jotai";
 import { actionsAtom, spritesAtom, activeSpriteAtom } from "../../util/atoms";
 
-// TODO :
-// 1. Drag Action in this area
- 
 
 
 export default function MidArea() {
 
-  
-  const [catActions, setCatActions] = useAtom(actionsAtom)
   const [sprites, setSprites] = useAtom(spritesAtom)
   const [activeSprite, setActiveSprite] = useAtom(activeSpriteAtom)
 
