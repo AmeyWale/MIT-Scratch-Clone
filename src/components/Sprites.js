@@ -43,7 +43,7 @@ function Sprites() {
         <div className="font-bold"> {"Sprites Manager"} </div>
         <div className='flex flex-col gap-2 mt-2'>
             {sprites.map((item, idx) => {
-                return <div key={idx+1} onClick={handleManage} id={`sprite-${idx}`} className='flex w-45 flex-col gap-2 rounded-md shadow-xl  p-4 items-center justify-center '>
+                return <div key={idx+1} onClick={handleManage} id={`sprite-${idx}`} className={`flex w-45 flex-col gap-2 rounded-md shadow-xl  p-4 items-center justify-center ${activeSprite == idx ? 'border-solid border-green-600 border-2' : ''}`} >
                     <div >
                         <img src={item.icon} />
                     </div>
