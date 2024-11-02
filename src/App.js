@@ -5,8 +5,10 @@ import PreviewArea from "./components/PreviewArea";
 import Header from "./components/Header";
 
 
+
 export default function App() {
 
+  
 
   return (
     <div className="bg-blue-100 pt-2 font-sans">

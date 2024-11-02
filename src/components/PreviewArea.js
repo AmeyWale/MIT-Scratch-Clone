@@ -4,6 +4,7 @@ import dragItems from "../../util/DragItems";
 
 import { positionAtom, rotationAtom, spritesAtom, activeSpriteAtom } from '../../util/atoms'
 import { useAtom } from 'jotai'
+import Sprite from "./Sprite";
 
 // TODO :
 // Make the Sprite Draggable in its area
@@ -97,40 +98,15 @@ export default function PreviewArea() {
   };
 
   console.log(sprites)
-  return (
-    <div className="flex-none h-full overflow-y-auto p-2"
-    ref={previewAreaRef}>
-      <div
-      id="previewsprite-0"
-      onMouseDown={handleMouseDown}
-      style={{
-        position: 'absolute',
-        transform: `translate(${position.x}px, ${position.y}px) rotate(${rotation}deg)`,
-        transition: "transform 0.3s ease",
-        cursor:"grab"
-      }}
-    >
-      <CatSprite />
-    </div>
 
-    {sprites.map((item, idx) => {
-      return <div
-        id={`previewsprite-${Number(idx+1)}`}
-        key={idx}
-        onMouseDown={handleMouseDown}
-        style={{
-          position: 'absolute',
-          transform: `translate(${position.x}px, ${position.y}px) rotate(${rotation}deg)`,
-          transition: "transform 0.3s ease",
-          cursor:"grab",
-          height:"120px",
-          width:"120px"
-        }}
-      >
-        <img src={item.icon}/>
-      </div>
-    })}
-      
+
+  // Need to handle all of this inside the Header component (the animations)
+
+  return (
+    <div className="flex-none h-full overflow-y-auto p-2" ref={previewAreaRef}>
+      {sprites.map((item, idx) => {
+        return <Sprite key={idx} idx={idx} item={item}/>
+      })}
     </div>
   );
 }

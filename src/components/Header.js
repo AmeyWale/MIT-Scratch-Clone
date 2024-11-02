@@ -1,54 +1,75 @@
-import React from 'react'
+import React, { act } from 'react'
 
 
-import { actionsAtom, positionAtom, rotationAtom, repeatCountAtom } from '../../util/atoms'
+import { actionsAtom, positionAtom, rotationAtom, spritesAtom } from '../../util/atoms'
 import { useAtom } from 'jotai'
 import dragItems from '../../util/DragItems'
+import getStyles from '../../util/getProperties';
 
 function Header() {
 
-  const [repeatCount, setRepeatCount] = useAtom(repeatCountAtom);
-  const [actions, setAction] = useAtom(actionsAtom);
-  const [position, setPosition] = useAtom(positionAtom);
-  const [rotation, setRotation] = useAtom(rotationAtom);
+  // const [repeatCount, setRepeatCount] = useAtom(repeatCountAtom);
+  // const [actions, setAction] = useAtom(actionsAtom);
+  // const [position, setPosition] = useAtom(positionAtom);
+  // const [rotation, setRotation] = useAtom(rotationAtom);
+  const [sprites, setSprites] = useAtom(spritesAtom)
+ 
+  const handleRun = async () =>{
+    sprites.forEach((sprite,idx)=>{
+      executeSpriteActions(sprite,idx)
+    })
+  }
 
+  const executeSpriteActions = async (sprite, spriteIdx) => {
+    let newX = sprite.x
+    let newY = sprite.y
+    let newAngle = sprite.angle
 
-  let repeats = 0;
-  
-  const handleRun = () =>{
-    let i = 0;
-    while (i < actions.length){
-
-      let action = dragItems[actions[i] - 1]
-
-      if (action.type === "move") {
-
-        setPosition((prev) => ({
-          ...prev,
-          x: prev.x + action.value,
-        }));
-      } else if (action.type === "rotate") {
-        setRotation((prev) => prev + action.value);
+    const executeActions = async (actions) => {
+      for (const action of actions) {
+        await new Promise(resolve => {
+          setTimeout(() => {
+            switch (action.type) {
+              case 'move':
+                newX += action.value 
+                break
+              case 'rotate':
+                newAngle += action.value
+                break
+              case 'goto':
+                newX = action.Xvalue
+                newY = action.Yvalue
+                break
+              case 'repeat':
+                
+                for (let i = 0; i < action.value; i++) {
+                  executeActions(actions)
+                }
+                break
+            }
+            setSprites(prevSprites => 
+              prevSprites.map((s,idx) => 
+                idx === spriteIdx ? { ...s, x: newX, y: newY, angle: newAngle } : s
+              )
+            )
+            resolve()
+          }, 500) // 500ms delay between actions
+        })
       }
-
-      else if (action.type === "repeat"){
-        if (repeats < repeatCount){
-          repeats += 1
-          i = 0;
-          continue;
-        }
-        else{
-          repeats = 0;
-        }
-      }
-      i++;
     }
-    
+
+    await executeActions(sprite.actions)
   }
 
   const handleReset = () => {
-    setPosition({ x: 0, y: 0 });
-    setRotation(0);
+    
+    setSprites(prevSprites => 
+      prevSprites.map((s,idx) => 
+      {
+        return { ...s, x: 0, y: 0, angle: 0 }
+      }
+      )
+    )
   }
 
 

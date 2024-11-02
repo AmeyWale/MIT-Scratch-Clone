@@ -20,6 +20,9 @@ function Sprites() {
         let file = event.target.files[0]
         let data = {
             icon : URL.createObjectURL(file),
+            x:0,
+            y:0,
+            angle:0,
             actions : []
         }
         setSprites([...sprites,data])
@@ -39,15 +42,8 @@ function Sprites() {
     <>
         <div className="font-bold"> {"Sprites Manager"} </div>
         <div className='flex flex-col gap-2 mt-2'>
-            <div id='sprite-0' onClick={handleManage} className='flex w-45 flex-col gap-2 rounded-md shadow-xl  p-4 items-center justify-center '>
-                <div >
-                    <CatSprite />
-                </div>
-                <button className='cursor-pointer p-2 bg-blue-500 rounded-sm'>Click to manage</button>
-            </div>
-
             {sprites.map((item, idx) => {
-                return <div key={idx+1} onClick={handleManage} id={`sprite-${Number(idx+1)}`} className='flex w-45 flex-col gap-2 rounded-md shadow-xl  p-4 items-center justify-center '>
+                return <div key={idx+1} onClick={handleManage} id={`sprite-${idx}`} className='flex w-45 flex-col gap-2 rounded-md shadow-xl  p-4 items-center justify-center '>
                     <div >
                         <img src={item.icon} />
                     </div>
