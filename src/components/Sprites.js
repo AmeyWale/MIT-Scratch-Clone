@@ -37,13 +37,22 @@ function Sprites() {
         setActiveSprite(id)
     }
     
+    const handleDelete = (event) => {
+        let parent = event.currentTarget.parentNode;
+        let id = parent.id.split("-")[1];
+        console.log(parent)
+        setSprites(sprites.filter((_,idx) => idx != parseInt(id)))
+    }
 
   return (
     <>
         <div className="font-bold"> {"Sprites Manager"} </div>
         <div className='flex flex-col gap-2 mt-2'>
             {sprites.map((item, idx) => {
-                return <div key={idx+1} onClick={handleManage} id={`sprite-${idx}`} className={`flex w-45 flex-col gap-2 rounded-md shadow-xl  p-4 items-center justify-center ${activeSprite == idx ? 'border-solid border-green-600 border-2' : ''}`} >
+                return <div key={idx+1} onClick={handleManage} id={`sprite-${idx}`} className={`flex w-45 relative flex-col gap-2 rounded-md shadow-xl  p-4 items-center justify-center ${activeSprite == idx ? 'border-solid border-green-600 border-2' : ''}`} >
+                    <div className='absolute top-0 right-0 cursor-pointer p-2 bg-red-500 text-white rounded-md' onClick={handleDelete}>
+                        <Icon name="trash" size={15} className='text-white'/>
+                    </div>
                     <div >
                         <img src={item.icon} />
                     </div>

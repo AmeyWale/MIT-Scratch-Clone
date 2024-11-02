@@ -25,8 +25,9 @@ function Header() {
     let newY = sprite.y
     let newAngle = sprite.angle
 
-    const executeActions = async (actions) => {
-      for (const action of actions) {
+   
+    const executeAction = async (action) => {
+      
         await new Promise(resolve => {
           setTimeout(() => {
             switch (action.type) {
@@ -42,10 +43,7 @@ function Header() {
                 break
               case 'repeat':
                 
-                for (let i = 0; i < action.value; i++) {
-                  executeActions(actions)
-                }
-                break
+                break;
             }
             setSprites(prevSprites => 
               prevSprites.map((s,idx) => 
@@ -55,7 +53,27 @@ function Header() {
             resolve()
           }, 500) // 500ms delay between actions
         })
+      
+    }
+
+    const executeActions = async (actions) => {
+      for (let index = 0; index < actions.length; index++) {
+          const action = actions[index];
+
+        if (action.type == "repeat"){
+          for (let j = 0; j < action.value; j++) {
+            for (let action of actions){
+              await executeAction(action)
+            }
+          }
+          break
+        }
+        else{
+          await executeAction(action)
+        }
+        
       }
+
     }
 
     await executeActions(sprite.actions)
@@ -77,6 +95,7 @@ function Header() {
     <div className='pl-2 pb-2 flex justify-around'>
         <h1>MIT Scratch Clone </h1>
         <div className='flex  gap-2'>
+          
             <div onClick={handleRun} className='p-3 rounded-full bg-green-900 cursor-pointer'></div>
             <div onClick={handleReset} className='p-3 rounded-full bg-red-900 cursor-pointer'></div>
         </div>

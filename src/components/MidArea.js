@@ -63,7 +63,14 @@ export default function MidArea() {
 
       return item
     })
-    console.log(tempState)
+
+    const getRandomIdx =  (min, max) => {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    setActiveSprite(sprites.length > 0 ? getRandomIdx(0,sprites.length-1) : null)
     setSprites(tempState)
     
   }
@@ -74,7 +81,7 @@ export default function MidArea() {
 
   return <div onDrop={handleDrag} onDragOver={handleDragOver} className="flex-1 pl-2 h-full overflow-auto">
       
-      {sprites[activeSprite].actions.map((item, idx)=>{
+      {sprites.length >= 1 && sprites[activeSprite].actions.map((item, idx)=>{
           
           return <div key={idx} className={`relative flex flex-row flex-wrap rounded ${item.color} text-white px-2 py-1 my-2 text-sm w-6/12 cursor-pointer`}>
 
