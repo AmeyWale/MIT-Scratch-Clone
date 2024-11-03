@@ -1,13 +1,14 @@
 import React from 'react'
 
 
-import { spritesAtom } from '../../util/atoms'
+import { spritesAtom, heroFeatureTriggerAtom } from '../../util/atoms'
 import { useAtom } from 'jotai'
 
 
 function Header() {
 
   const [sprites, setSprites] = useAtom(spritesAtom)
+  const [heroFeatureTrigger, setHeroFeatureTrigger] = useAtom(heroFeatureTriggerAtom);
  
   const handleRun = async () =>{
     sprites.forEach((sprite,idx)=>{
@@ -65,10 +66,8 @@ function Header() {
         }
         else{
           await executeAction(action)
-        }
-        
+        } 
       }
-
     }
 
     await executeActions(sprite.actions)
@@ -85,14 +84,17 @@ function Header() {
     )
   }
 
+  const handleHeroFeature = () => {
+    setHeroFeatureTrigger(!heroFeatureTrigger)
+  }
 
   return (
-    <div className='pl-2 pb-2 flex justify-around'>
+    <div className='pl-2 pb-2 flex items-center justify-around'>
         <h1>MIT Scratch Clone </h1>
         <div className='flex  gap-2'>
-
-            <div onClick={handleRun} className='p-3 rounded-full bg-green-900 cursor-pointer'></div>
-            <div onClick={handleReset} className='p-3 rounded-full bg-red-900 cursor-pointer'></div>
+            <div onClick={handleHeroFeature} className='p-2 rounded-md text-white bg-blue-900 hover:bg-blue-600 cursor-pointer'>Hero Feature</div>
+            <div onClick={handleRun} className='px-5 rounded-full bg-green-900 cursor-pointer'></div>
+            <div onClick={handleReset} className='px-5 rounded-full bg-red-900 cursor-pointer'></div>
         </div>
     </div>
   )

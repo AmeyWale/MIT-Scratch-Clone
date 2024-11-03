@@ -12,3 +12,6 @@ export const spritesAtom = atom([
 ])
 export const activeSpriteAtom = atom(0)
 
+export const heroFeatureTriggerAtom = atom(false) 
+export const char1StepsAtom = atom(250);
+export const char2StepsAtom = atom(250)
